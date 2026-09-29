@@ -1,0 +1,12 @@
+.build/
+build/
+*.app
+.DS_Store
+.signing/
+.vscode/
+.swiftpm/
+xcuserdata/
+DerivedData/
+.idea/
+HANDOFF.md
+/public/
