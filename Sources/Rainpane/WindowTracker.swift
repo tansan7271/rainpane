@@ -63,8 +63,7 @@ final class WindowTracker {
     /// 위젯 창의 투명 여백 (보이는 위젯은 창보다 사방으로 이만큼 작다)
     static let widgetInset: CGFloat = 10
 
-    /// 스크린샷 도구 프로세스 (실측: ⌘⇧4는 screencapture, ⌘⇧5는 Screenshot)
-    private static let screenshotOwners = ["screencapture", "Screenshot", "screencaptureui"].map { $0 as CFString }
+    private static let screenshotOwner = "screencapture" as CFString
     private static let windowServer = "Window Server" as CFString
 
     static func fetch(excluding pid: pid_t) -> (windows: [TrackedWindow], overview: Bool, capturing: Bool, recording: Bool) {
@@ -84,8 +83,11 @@ final class WindowTracker {
             if layer != 0, let o = cfValue(info, kCGWindowOwnerName) {
                 let owner = unsafeBitCast(o, to: CFString.self)
                 // 스크린샷 도구의 선택 창 (찍은 뒤 모서리에 뜨는 작은 미리보기·도구 막대는 크기로 거른다)
-                if screenshotOwners.contains(where: { CFEqual($0, owner) }) {
-                    if let r = cfRect(info, kCGWindowBounds), r.width >= 600, r.height >= 400 { capturing = true }
+                // 스크린샷 도구가 영역·창을 고르는 동안 띄우는 선택 화면(⌘⇧4·⌘⇧5 모두 screencapture, 레이어 1498).
+                // ⌘⇧5 도구 막대 쪽 창(Screenshot, 레이어 24)과 녹화용 창(screencapture, 레이어 1000)은 녹화 내내,
+                // 끝난 뒤에도 몇 초 떠 있어서 보지 않는다(보면 녹화 중에 비가 숨고 늦게 돌아왔다)
+                if CFEqual(owner, screenshotOwner) {
+                    if layer > 1000, let r = cfRect(info, kCGWindowBounds), r.width >= 600, r.height >= 400 { capturing = true }
                     continue
                 }
                 // 녹화 표시: 시스템(Window Server)이 모니터 오른쪽 위 구석에 띄우는 28×28 창.
