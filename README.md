@@ -40,6 +40,10 @@ cd rainpane
 
 The app lives in the menu bar. Left-click opens the settings. Right-click turns the rain on or off.
 
+## Windows (experimental)
+
+There is a Windows port in [windows/](windows/). It is much more experimental than the Mac version. I have only run it in a Windows 11 ARM virtual machine, and there is no prebuilt download. See [windows/README.md](windows/README.md) to build it.
+
 ## Permissions and privacy
 
 With the default settings, Rainpane asks for no permissions.
