@@ -61,7 +61,7 @@ These can stop working after a macOS update.
 
 ## How it was made
 
-This project was fully vibe-coded. I described what I wanted, mostly with screenshots and notes on how it felt. Claude Code wrote all of the code. The code comments and the design notes in [ARCHITECTURE.md](ARCHITECTURE.md) are in Korean because that is the language we worked in.
+This project was fully vibe-coded. I described what I wanted, mostly with screenshots and notes on how it felt. Claude Code wrote all of the code. The code comments and the design notes in [ARCHITECTURE.md](ARCHITECTURE.md) are in Korean because that is the language we worked in. The design notes have an English translation in [ARCHITECTURE.en.md](ARCHITECTURE.en.md). The Korean version is the original.
 
 Limitations:
 
